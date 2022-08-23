@@ -24,28 +24,28 @@ jobs:
         pattern: |
           #BEGIN_TESTS([\s\S]*)#END_TESTS
     - name: Check for named tests
+      id: tests-found
       run: |
         echo "${{steps.tests.outputs.value}}"
         tests_list="${{steps.tests.outputs.value}}"
         tests_list=`echo $tests_list | tr '\n' ' '`
         tests_list=`echo $tests_list | tr '\r' ' '`
-        echo 12
-        echo "1${tests_list}2"
-        echo abc
         tests_list=`echo $tests_list | sed 's/ *$//g'`
-        echo 4
-        echo $tests_list
-        echo 5
-        [ -z "$tests_list" ] && echo "Empty" || echo "Not empty"
-
-
-    # - uses: mshick/add-pr-comment@v1
-    #   with:
-    #     message: |
-    #       **Hello**
-    #       🌏
-    #       !
-    #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-    #     repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
-    #     allow-repeats: false # This is the default
+        [ -z "$tests_list" ] && echo "::set-output name=tests-added::false" || echo "::set-output name=tests-added::true"
+    - uses: mshick/add-pr-comment@v1
+      if: steps.tests-found.outputs.tests-added == 'false'
+      with:
+        message: |
+          Please add your tests
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token-user-login: 'github-actions[bot]'
+        allow-repeats: true
+    - uses: mshick/add-pr-comment@v1
+      if: steps.tests-found.outputs.tests-added == 'false'
+      with:
+        message: |
+          Thank you for adding your tests
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token-user-login: 'github-actions[bot]'
+        allow-repeats: true
     
