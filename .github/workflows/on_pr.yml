@@ -17,6 +17,6 @@ jobs:
         pattern: |
           `myVar:([^\s]*)`    
     - name: output value
-      run: echo ${{join(steps.tests.outputs.*, '\n')}}
+      run: echo ${{join(steps.tests1.outputs.*, '\n')}}
     # - uses: actions/checkout@v2 
     # - run: echo Implement This
