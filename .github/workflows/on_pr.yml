@@ -15,7 +15,7 @@ jobs:
       id: tests
       with:
         pattern: |
-          `myVar:([^\s]*)`    
+          myVar:([^\s]*)    
     - name: Run tests
       run: |
         echo "::set-output name=mix-test::foo"
