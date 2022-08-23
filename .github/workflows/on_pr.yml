@@ -1,15 +1,52 @@
 name: Pull Request Checks
 on:
   pull_request:
-    branches:
-      - master
-      - development
+    # branches:
+    #   - dev
+    #   - qa
+
     types: [opened, synchronize]
 
 jobs:
-  label-check:
+  confirm-pr-correct:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2 
-    - run: echo Implement This
+    - uses: kentaro-m/task-completed-checker-action@v0.1.0
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+    - uses: begedin/variable-regex-extractor-action@v0.2.1
+      id: tests
+      with:
+        pattern: |
+          #BEGIN_TESTS([\s\S]*)#END_TESTS
+    - name: Check for named tests
+      id: tests-found
+      run: |
+        echo "${{steps.tests.outputs.value}}"
+        tests_list="${{steps.tests.outputs.value}}"
+        tests_list=`echo $tests_list | tr '\n' ' '`
+        tests_list=`echo $tests_list | tr '\r' ' '`
+        tests_list=`echo $tests_list | sed 's/ *$//g'`
+        [ -z "$tests_list" ] && echo "::set-output name=tests-added::false" || echo "::set-output name=tests-added::true"
+    - uses: mshick/add-pr-comment@v1
+      if: steps.tests-found.outputs.tests-added == 'false'
+      with:
+        message: |
+          🛑🛑 Please add your tests before continuing 🛑🛑
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token-user-login: 'github-actions[bot]'
+        allow-repeats: true
+    - name: exit if no tests
+      if: steps.tests-found.outputs.tests-added == 'false'
+      run: exit 1
+    - uses: mshick/add-pr-comment@v1
+      if: steps.tests-found.outputs.tests-added == 'true'
+      with:
+        message: |
+          :octocat: Thank you for adding your tests. :octocat:
+          To confirm those tests are ${{steps.tests.outputs.value}}
+          
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        repo-token-user-login: 'github-actions[bot]'
+        allow-repeats: true
+    
