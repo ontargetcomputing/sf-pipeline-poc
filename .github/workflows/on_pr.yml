@@ -5,9 +5,7 @@ on:
     #   - dev
     #   - qa
 
-    types: [opened, synchronize]
-  pull_request_review_comment:
-    types: [edited]
+    types: [opened, synchronize, edited]
 jobs:
   confirm-pr-correct:
     runs-on: ubuntu-latest
