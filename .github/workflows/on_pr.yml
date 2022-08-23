@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: kentaro-m/task-completed-checker-action@v0.1.0
     - uses: begedin/variable-regex-extractor-action@v0.2.1
       id: tests
       with:
