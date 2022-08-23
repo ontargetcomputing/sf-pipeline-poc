@@ -27,7 +27,9 @@ jobs:
       run: |
         echo "${{steps.tests.outputs.value}}"
         testslist="${{steps.tests.outputs.value}}"
+        testslist=`echo $testslist | sed ':a;N;$!ba;s/\n/ /g'`
         testslist=`echo $testslist | sed 's/ *$//g'`
+        
         [ -z "$testslist" ] && echo "Empty" || echo "Not empty"
 
 
