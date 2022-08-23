@@ -8,12 +8,12 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  tasks-complete:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: kentaro-m/task-completed-checker-action@v0.1.0
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"    
+  # tasks-complete:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: kentaro-m/task-completed-checker-action@v0.1.0
+  #     with:
+  #       repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
   label-check:
     runs-on: ubuntu-latest
@@ -26,9 +26,9 @@ jobs:
     - name: Check for named tests
       run: |
         echo "${{steps.tests.outputs.value}}"
-        testslist=${{steps.tests.outputs.value}}
-        testslist=`echo $testslist | sed 's/ *$//g'`
-        echo "I want to learn $testslist from the internet"
+        # testslist=${{steps.tests.outputs.value}}
+        # testslist=`echo $testslist | sed 's/ *$//g'`
+        # echo "I want to learn $testslist from the internet"
 
     # - uses: mshick/add-pr-comment@v1
     #   with:
