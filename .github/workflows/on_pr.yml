@@ -32,11 +32,11 @@ jobs:
         echo 12
         echo "1${tests_list}2"
         echo abc
-        foobar=`echo $tests_list | sed 's/ *$//g'`
+        tests_list=`echo $tests_list | sed 's/ *$//g'`
         echo 3
-        echo $foobar
+        echo $tests_list
         echo 4
-        [ -z "$foobar" ] && echo "Empty" || echo "Not empty"
+        [ -z "$tests_list" ] && echo "Empty" || echo "Not empty"
 
 
     # - uses: mshick/add-pr-comment@v1
