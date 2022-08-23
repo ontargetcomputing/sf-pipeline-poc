@@ -30,6 +30,7 @@ jobs:
         testslist=`echo $testslist | sed 's/ *$//g'`
         [ -z "$testslist" ] && echo "Empty" || echo "Not empty"
 
+
     # - uses: mshick/add-pr-comment@v1
     #   with:
     #     message: |
