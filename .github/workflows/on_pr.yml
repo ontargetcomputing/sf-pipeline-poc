@@ -28,6 +28,7 @@ jobs:
         echo "${{steps.tests.outputs.value}}"
         tests_list="${{steps.tests.outputs.value}}"
         tests_list=`echo $tests_list | tr '\n' ' '`
+        tests_list=`echo $tests_list | tr '\r' ' '`
         tests_list=`echo $tests_list | sed 's/ *$//g'`
         echo 1
         echo $tests_list
