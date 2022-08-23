@@ -10,8 +10,10 @@ jobs:
   deploy:
   
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{ github.ref }} 
     steps:
+      - name: Which branch
+        run: echo ${{ github.ref }}      
       - uses: actions/checkout@v2    
       - name: Login
         uses: sfdx-actions/setup-sfdx@v1
