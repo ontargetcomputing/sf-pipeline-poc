@@ -36,7 +36,7 @@ jobs:
       if: steps.tests-found.outputs.tests-added == 'false'
       with:
         message: |
-          Please add your tests - todo
+          🛑🛑🛑 Please add your tests before continuing 🛑🛑🛑
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         allow-repeats: true
@@ -44,10 +44,9 @@ jobs:
       if: steps.tests-found.outputs.tests-added == 'true'
       with:
         message: |
-          :octocat:
-          Thank you for adding your tests.
+          :octocat: Thank you for adding your tests. :octocat:
           To confirm those tests are ${{steps.tests.outputs.value}}
-          :octocat:
+          
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         allow-repeats: true
