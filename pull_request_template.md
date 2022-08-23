@@ -3,4 +3,5 @@
 
 #BEGIN_TESTS
 - [ ] I have listed my tests between the tags below - one per line
+
 #END_TESTS
