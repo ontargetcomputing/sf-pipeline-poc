@@ -15,15 +15,7 @@ jobs:
       id: tests
       with:
         pattern: |
-          myVar:([^\s]*)    
-    - name: Run tests
-      run: |
-        echo "::set-output name=mix-test::foo"
-      id: run_tests
-      env:
-        MIX_ENV: test
-        PGHOST: localhost
-        PGUSER: postgres          
+          <tests>([\s\S]*)<\/tests>
     - name: output value
       run: echo ${{steps.tests.outputs.value}}
     # - uses: actions/checkout@v2 
