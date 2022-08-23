@@ -15,7 +15,7 @@ jobs:
       id: tests
       with:
         pattern: |
-          <tests>([\s\S]*)<\/tests>
+          #BEGIN_TESTS([\s\S]*)#END_TESTS
     - name: output value
       run: echo "${{steps.tests.outputs.value}}"
     # - uses: actions/checkout@v2 
