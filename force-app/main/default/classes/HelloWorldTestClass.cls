@@ -16,6 +16,6 @@ private class HelloWorldTestClass {
 
        // added this comment
        // and another
-       // 3
+       // 4
     }
 }
