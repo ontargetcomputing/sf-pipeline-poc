@@ -1,9 +1,9 @@
 name: Pull Request Checks
 on:
   pull_request:
-    branches:
-      - dev
-      - qa
+    # branches:
+    #   - dev
+    #   - qa
     types: [opened, synchronize]
 
 jobs:
