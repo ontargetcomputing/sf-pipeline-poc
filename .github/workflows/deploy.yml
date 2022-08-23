@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
+      - uses: actions/checkout@v2    
       - name: Login
         uses: sfdx-actions/setup-sfdx@v1
         with:
