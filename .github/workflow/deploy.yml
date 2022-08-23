@@ -12,3 +12,4 @@ jobs:
       #   with:
       #     sfdx-auth-url: 
       - run: echo ${{ secrets.SFDX_AUTH_URL }}   
+      - run: echo help
