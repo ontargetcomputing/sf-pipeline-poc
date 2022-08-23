@@ -41,7 +41,7 @@ jobs:
         repo-token-user-login: 'github-actions[bot]'
         allow-repeats: true
     - uses: mshick/add-pr-comment@v1
-      if: steps.tests-found.outputs.tests-added == 'false'
+      if: steps.tests-found.outputs.tests-added == 'true'
       with:
         message: |
           Thank you for adding your tests
