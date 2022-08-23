@@ -13,6 +13,7 @@ jobs:
         with:
           sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
       - run: pwd
+      - run: ls -lrt
       - name: Set Default
         run: sfdx force:config:set defaultdevhubusername=richard@otc2-richard-sandbox.com
       - name: Deploy
