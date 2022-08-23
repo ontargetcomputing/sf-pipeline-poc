@@ -31,11 +31,11 @@ jobs:
         tests_list=`echo $tests_list | tr '\r' ' '`
         echo 12
         echo "1$tests_list2"
-        echo 2
+        echo abc
         tests_list=`echo $tests_list | sed 's/ *$//g'`
-        echo 1
+        echo 3
         echo $tests_list
-        echo 2
+        echo 4
         [ -z "$tests_list" ] && echo "Empty" || echo "Not empty"
 
 
