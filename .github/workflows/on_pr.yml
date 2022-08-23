@@ -26,6 +26,7 @@ jobs:
     - name: Check for named tests
       run: |
         echo "${{steps.tests.outputs.value}}"
+        testslist=${{steps.tests.outputs.value}}
 
     # - uses: mshick/add-pr-comment@v1
     #   with:
