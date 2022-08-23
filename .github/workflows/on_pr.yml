@@ -36,6 +36,9 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         allow-repeats: true
+    - name: exit if no tests
+      if: steps.tests-found.outputs.tests-added == 'false'
+      run: exit 1
     - uses: mshick/add-pr-comment@v1
       if: steps.tests-found.outputs.tests-added == 'true'
       with:
