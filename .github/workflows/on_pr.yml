@@ -25,6 +25,6 @@ jobs:
         PGHOST: localhost
         PGUSER: postgres          
     - name: output value
-      run: echo ${{steps.run_tests.outputs.mix-testd}}
+      run: echo ${{steps.tests.outputs.value}}
     # - uses: actions/checkout@v2 
     # - run: echo Implement This
