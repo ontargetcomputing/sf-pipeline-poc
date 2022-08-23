@@ -33,7 +33,7 @@ jobs:
         echo "1${tests_list}2"
         echo abc
         tests_list=`echo $tests_list | sed 's/ *$//g'`
-        echo 3
+        echo 4
         echo $tests_list
         echo 4
         [ -z "$tests_list" ] && echo "Empty" || echo "Not empty"
