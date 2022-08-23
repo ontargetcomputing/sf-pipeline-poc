@@ -36,7 +36,7 @@ jobs:
       if: steps.tests-found.outputs.tests-added == 'false'
       with:
         message: |
-          Please add your tests
+          Please add your tests - todo
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         repo-token-user-login: 'github-actions[bot]'
         allow-repeats: true
