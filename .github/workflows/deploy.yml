@@ -3,7 +3,7 @@ name: SFDX Test Run on Push
 on: [push]
 
 jobs:
-  test:
+  deploy:
   
     runs-on: ubuntu-latest
     environment: dev
