@@ -35,7 +35,7 @@ jobs:
         tests_list=`echo $tests_list | sed 's/ *$//g'`
         echo 4
         echo $tests_list
-        echo 4
+        echo 5
         [ -z "$tests_list" ] && echo "Empty" || echo "Not empty"
 
 
