@@ -1,0 +1,14 @@
+name: SFDX Test Run on Push
+
+on: [push]
+
+jobs:
+  test:
+  
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      # - uses: sfdx-actions/setup-sfdx@v1
+      #   with:
+      #     sfdx-auth-url: 
+      - run: echo ${{ secrets.SFDX_AUTH_URL }}   
