@@ -13,5 +13,7 @@ private class HelloWorldTestClass {
 
        // Test that the trigger correctly updated the price
        System.assertEquals(95, b.Price__c);
+
+       // added this comment
     }
 }
