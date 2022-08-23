@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev
     steps:
-      - uses: sfdx-actions/setup-sfdx@v1
+      - name: Login
+        uses: sfdx-actions/setup-sfdx@v1
         with:
           sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
       - name: Deploy
