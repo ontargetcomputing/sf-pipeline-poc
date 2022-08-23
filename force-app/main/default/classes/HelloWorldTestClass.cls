@@ -15,5 +15,6 @@ private class HelloWorldTestClass {
        System.assertEquals(95, b.Price__c);
 
        // added this comment
+       // and another
     }
 }
