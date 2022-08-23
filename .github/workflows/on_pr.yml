@@ -17,6 +17,6 @@ jobs:
         pattern: |
           <tests>([\s\S]*)<\/tests>
     - name: output value
-      run: echo ${{steps.tests.outputs.value}}
+      run: echo "${{steps.tests.outputs.value}}"
     # - uses: actions/checkout@v2 
     # - run: echo Implement This
