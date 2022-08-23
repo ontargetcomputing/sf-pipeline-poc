@@ -3,12 +3,13 @@ name: SFDX Test Run on Push
 on: 
   pull_request:
     branches:
-      - master
+      - dev
+      - qa
+      - uat
     types: [closed]
 
 jobs:
   deploy:
-  
     runs-on: ubuntu-latest
     environment: ${{ github.ref }} 
     steps:
