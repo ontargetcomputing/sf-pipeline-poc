@@ -11,5 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2 
-    - run: echo Implement This
+    - uses: actions/variable-regex-extractor-action@v1.1
+      id: tests
+      with:
+        pattern: |
+          `myVar:([^\s]*)`    
+    - name: output value
+      run: echo ${{steps.tests.output}}
+    # - uses: actions/checkout@v2 
+    # - run: echo Implement This
