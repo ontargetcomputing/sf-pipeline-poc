@@ -7,7 +7,7 @@ on:
 
     types: [opened, synchronize]
   issue_comment:
-    - edited
+    types: [edited]
 jobs:
   confirm-pr-correct:
     runs-on: ubuntu-latest
