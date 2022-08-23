@@ -16,7 +16,15 @@ jobs:
       with:
         pattern: |
           `myVar:([^\s]*)`    
+    - name: Run tests
+      run: |
+        echo "::set-output name=mix-test::foo"
+      id: run_tests
+      env:
+        MIX_ENV: test
+        PGHOST: localhost
+        PGUSER: postgres          
     - name: output value
-      run: echo ${{join(steps.tests1.outputs.*, '\n')}}
+      run: echo ${{join(steps.run_tests.outputs.*, '\n')}}
     # - uses: actions/checkout@v2 
     # - run: echo Implement This
