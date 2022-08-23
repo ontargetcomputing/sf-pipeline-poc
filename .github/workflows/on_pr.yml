@@ -7,13 +7,15 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  label-check:
-    runs-on: ubuntu-latest
-
+  tasks-complete:
     steps:
     - uses: kentaro-m/task-completed-checker-action@v0.1.0
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"    
+
+  label-check:
+    runs-on: ubuntu-latest
+    steps:
     - uses: begedin/variable-regex-extractor-action@v0.2.1
       id: tests
       with:
