@@ -6,7 +6,8 @@ on:
     #   - qa
 
     types: [opened, synchronize]
-
+  issue_comment:
+    - edited
 jobs:
   confirm-pr-correct:
     runs-on: ubuntu-latest
