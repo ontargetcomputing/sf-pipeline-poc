@@ -30,7 +30,7 @@ jobs:
         tests_list=`echo $tests_list | tr '\n' ' '`
         tests_list=`echo $tests_list | tr '\r' ' '`
         echo 1
-        echo $tests_list
+        echo "1$tests_list2"
         echo 2
         tests_list=`echo $tests_list | sed 's/ *$//g'`
         echo 1
