@@ -11,6 +11,5 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-    - name: Which type
-      run: echo hello
-      
+    - run: echo "event name is:" ${{ github.event_name }} 
+    - run: echo "event type is:" ${{ github.event.action }} 
