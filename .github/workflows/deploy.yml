@@ -37,5 +37,5 @@ jobs:
               echo "No Teting Label"
               echo "Default to test local"
             fi
-      - name: Test
-        run: sfdx force:apex:test:run --testlevel RunLocalTests
+      # - name: Test
+      #   run: sfdx force:apex:test:run --testlevel RunLocalTests
