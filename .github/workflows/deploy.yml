@@ -10,7 +10,7 @@ on: push
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref }}
+    environment: dev
     steps:
       - name: Which branch
         run: echo ${{ github.ref }}
