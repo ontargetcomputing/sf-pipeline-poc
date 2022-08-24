@@ -9,12 +9,13 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
+    - echo Event Action = ${{github.event.action}}
     - uses: Renato66/auto-label@v2
-      if:  github.event.action == 'opened'
+      if:  ${{github.event.action}} == 'opened'
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         ignore-comments: true
-        default-labels: '["test all"]'
+        default-labels: '["test:local"]'
     - uses: kentaro-m/task-completed-checker-action@v0.1.0
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
