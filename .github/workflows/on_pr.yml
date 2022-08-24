@@ -12,5 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Which type
-      run: echo hello
-      
+      run: echo ${{ github.event.pull_request.type }}    
