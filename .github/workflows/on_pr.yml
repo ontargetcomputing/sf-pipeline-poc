@@ -4,6 +4,7 @@ on:
     branches:
       - dev
       - qa
+      - demo
 
     types: [opened, synchronize, edited]
 jobs:
