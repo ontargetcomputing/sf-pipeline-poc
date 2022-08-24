@@ -34,8 +34,8 @@ jobs:
             elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
               echo "specified"              
             else
-              echo "Setting bump:patch"
-              echo "::set-output name=bump::patch"
+              echo "No Teting Label"
+              echo "Default to test local"
             fi
       - name: Test
         run: sfdx force:apex:test:run --testlevel RunLocalTests
