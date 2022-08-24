@@ -6,6 +6,7 @@ on:
       - dev
       - qa
     types: [closed]
+    
 
 jobs:
   deploy:
