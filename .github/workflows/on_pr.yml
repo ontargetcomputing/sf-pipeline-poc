@@ -9,7 +9,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-    - echo Event Action = ${{github.event.action}}
+    - run: echo Event Action = ${{github.event.action}}
     - uses: Renato66/auto-label@v2
       if:  ${{github.event.action}} == 'opened'
       with:
