@@ -1,16 +1,23 @@
 name: Pull Request Checks
 on:
   pull_request:
-    # branches:
-    #   - dev
-    #   - qa
+    branches:
+      - dev
+      - qa
 
-    types: [opened, synchronize]
-
+    types: [opened, synchronize, edited]
 jobs:
-  confirm-pr-correct:
+  setup:
     runs-on: ubuntu-latest
     steps:
+    - name: Which type
+      run: echo ${{ github.event.pull_request.type }}    
+    - uses: Renato66/auto-label@v2
+      if: github.event.pull_request.type == 'opened'
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        ignore-comments: true
+        default-labels: '["test all"]'
     - uses: kentaro-m/task-completed-checker-action@v0.1.0
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"

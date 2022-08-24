@@ -1,0 +1,17 @@
+name: Adding 'test all' label on creation
+# Possible labels are 'test all', 'test none', 'test local', 'test specified'
+on:
+  pull_request:
+    branches:
+      - dev
+      - qa
+    types: ['opened']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Renato66/auto-label@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          ignore-comments: true
+          default-labels: '["test all"]'
