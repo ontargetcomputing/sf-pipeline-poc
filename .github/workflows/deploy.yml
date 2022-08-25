@@ -30,10 +30,15 @@ jobs:
             elif [ -n "$GITHUB_PR_LABEL_TEST_ALL" ]; then
               echo "'test all' label found.  Running all tests"
             elif [ -n "$GITHUB_PR_LABEL_TEST_LOCAL" ]; then
-              echo "'test local' label found.  Running local tests"
+              echo "local"
             elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
               echo "'test specified' label found.  Running specified tests"              
             else
-              echo "No Teting Label"
+              echo "No Testing Label"
               echo "Default to test local"
+              sfdx force:apex:test:run --testlevel RunLocalTests
             fi
+
+
+
+
