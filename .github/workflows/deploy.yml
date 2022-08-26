@@ -44,13 +44,15 @@ jobs:
         id: pr-labels
         uses: joerick/pr-labels-action@v1.0.6
       - uses: begedin/variable-regex-extractor-action@v0.2.1
-        if: contains(steps.pr-labels.outputs.labels, ' test specified ')
+        #if: contains(steps.pr-labels.outputs.labels, ' test specified ')
+        if: env.GITHUB_PR_LABEL_TEST_SPECIFIED == '1'
         id: tests
         with:
           pattern: |
             #BEGIN_TESTS([\s\S]*)#END_TESTS
       - name: Determine Named Tests
-        if: contains(steps.pr-labels.outputs.labels, ' test specified ')
+        #if: contains(steps.pr-labels.outputs.labels, ' test specified ')
+        if: env.GITHUB_PR_LABEL_TEST_SPECIFIED == '1'
         id: tests-cooked
         run: |
           echo "${{steps.tests.outputs.value}}"
