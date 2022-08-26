@@ -26,11 +26,11 @@ jobs:
       - name: Determine Login Url
         id: login-url
         run: |
-          if [[ ${{github.ref}}" == "Dev" ]]; then
+          if [[ "${{github.ref}}" == "Dev" ]]; then
               echo "::set-output name=sdfx_login_url::${{env.SFDX_AUTH_URL_Dev}}"
-          elif [[ ${{github.ref}}" == "QA" ]]; then
+          elif [[ "${{github.ref}}" == "QA" ]]; then
               echo "::set-output name=sdfx_login_url::${{env.SFDX_AUTH_URL_QA}}"
-          elif [[ ${{github.ref}}" == "UAT" ]]; then
+          elif [[ "${{github.ref}}" == "UAT" ]]; then
               echo "::set-output name=sdfx_login_url::${{env.SFDX_AUTH_URL_UAT}}"
           else
               echo "There is no login url for this branch"
