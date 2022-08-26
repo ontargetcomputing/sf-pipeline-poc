@@ -9,7 +9,7 @@ on:
     types: [closed]
 
 env: 
-  SFDX_AUTH_URL_Dev: force://PlatformCLI::5Aep861aymUV3BBBVkLk.VwvuwKsPOS8dcBtgsiTFsoDUIMlFVAyyNCyUDD5BlbwJMHnJnz.J5K8qvVr0oU6EkG@nyorkcdotapa--dev.my.salesforce.com
+  SFDX_AUTH_URL_Dev: force://PlatformCLI::5Aep861Bky2w54txC1sM4QxGO75KVFtLlS9gZsRiFemcS6bnnKSc.eGYDKlMyfaj7DTaZ9NyaHYKRPHVMh2vJqg@ontargetcomputing2-dev-ed.my.salesforce.com
   SFDX_AUTH_URL_QA: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
   SFDX_AUTH_URL_UAT: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
 jobs:
@@ -44,14 +44,12 @@ jobs:
         id: pr-labels
         uses: joerick/pr-labels-action@v1.0.6
       - uses: begedin/variable-regex-extractor-action@v0.2.1
-        #if: contains(steps.pr-labels.outputs.labels, ' test specified ')
         if: env.GITHUB_PR_LABEL_TEST_SPECIFIED == '1'
         id: tests
         with:
           pattern: |
             #BEGIN_TESTS([\s\S]*)#END_TESTS
       - name: Determine Named Tests
-        #if: contains(steps.pr-labels.outputs.labels, ' test specified ')
         if: env.GITHUB_PR_LABEL_TEST_SPECIFIED == '1'
         id: tests-cooked
         run: |
@@ -61,22 +59,21 @@ jobs:
           tests_list=`echo $tests_list | tr '\r' ' '`
           tests_list=`echo $tests_list | sed 's/ *$//g'`
           echo "::set-output name=tests-cooked::$tests_list"
-      - name: test-output
-        run: echo ${{steps.tests-cooked.outputs.tests-cooked}}
-
-        # - name: Deploy
-        #   run: |
-        #       if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
-        #         echo "'test none' label found.  No tests being run"
-        #       elif [ -n "$GITHUB_PR_LABEL_TEST_ALL" ]; then
-        #         echo "'test all' label found.  Running all tests"
-        #       elif [ -n "$GITHUB_PR_LABEL_TEST_LOCAL" ]; then
-        #         echo "'test local' label found.  Running local tests"
-        #         sfdx force:apex:test:run --testlevel RunLocalTests
-        #       elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
-        #         echo "'test specified' label found.  Running specified tests"
-        #         sfdx force:source:deploy -x "manifest/package.xml" -l RunSpecifiedTests -r ${{}} -w 33 --verbose --loglevel fatal              
-        #       else
-        #         echo "No Teting Label"
-        #         echo "Default to test local"
-        #       fi
+      - name: Deploy
+        run: |
+            if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
+              echo "'test none' label found.  No tests being run"
+              sfdx force:source:deploy -x "manifest/package.xml" -l NoTestRun -w 33 --verbose --loglevel fatal 
+            elif [ -n "$GITHUB_PR_LABEL_TEST_ALL" ]; then
+              echo "'test all' label found.  Running all tests"
+              sfdx force:source:deploy -x "manifest/package.xml" -l RunAllTestsInOrg -w 33 --verbose --loglevel fatal 
+            elif [ -n "$GITHUB_PR_LABEL_TEST_LOCAL" ]; then
+              echo "'test local' label found.  Running local tests"
+              sfdx force:source:deploy -x "manifest/package.xml" -l RunLocalTests -w 33 --verbose --loglevel fatal 
+            elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
+              echo "'test specified' label found.  Running specified tests"
+              sfdx force:source:deploy -x "manifest/package.xml" -l RunSpecifiedTests -r ${{steps.tests-cooked.outputs.tests-cooked}} -w 33 --verbose --loglevel fatal              
+            else
+              echo "No Teting Label"
+              echo "Default to test local"
+            fi
