@@ -6,6 +6,8 @@
 Please list your tests on a single line between the tags below.
 Your list should follow the format that would be required to run your tests via the [sfdx cli](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_testing.htm).
 
+**If you have no tests, please type "NO TESTS" or something to let the Pull Request Reviewer know.**
+
 ```
 sfdx force:apex:test:run --tests"TestA.excitingMethod,TestA.boringMethod,TestB"
 ```

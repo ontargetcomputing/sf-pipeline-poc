@@ -3,38 +3,63 @@ name: SFDX Deploy and Test on Merge
 on:  
   pull_request:
     branches:
-      - dev
-      - qa
+      - Dev
+      - QA
+      - UAT
     types: [closed]
+
+env: 
+  SFDX_AUTH_URL_Dev: This_is_Dev
+  SFDX_AUTH_URL_QA: This_is_QA
+  SFDX_AUTH_URL_UAT: This_is_UAT
+  # SFDX_AUTH_URL_Dev: force://PlatformCLI::5Aep861aymUV3BBBVkLk.VwvuwKsPOS8dcBtgsiTFsoDUIMlFVAyyNCyUDD5BlbwJMHnJnz.J5K8qvVr0oU6EkG@nyorkcdotapa--dev.my.salesforce.com
+  # SFDX_AUTH_URL_QA: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
+  # SFDX_AUTH_URL_UAT: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref }}
+    # environment: ${{ github.ref }}
     steps:
       - name: Show Branch
         run: echo Deploying and testing to ${{ github.ref }}
       - uses: actions/checkout@v2
-      - name: Login
-        uses: sfdx-actions/setup-sfdx@v1
-        with:
-          sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
-      - name: Deploy
-        run: sfdx force:source:deploy -x manifest/package.xml
-      - name: Get PR labels
-        id: pr-labels
-        uses: joerick/pr-labels-action@v1.0.6
-      - name: Run Tests
+      - name: Determine Login Url
+        id: login-url
         run: |
-            if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
-              echo "'test none' label found.  No tests being run"
-            elif [ -n "$GITHUB_PR_LABEL_TEST_ALL" ]; then
-              echo "'test all' label found.  Running all tests"
-            elif [ -n "$GITHUB_PR_LABEL_TEST_LOCAL" ]; then
-              echo "'test local' label found.  Running local tests"
-              sfdx force:apex:test:run --testlevel RunLocalTests
-            elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
-              echo "'test specified' label found.  Running specified tests"              
-            else
-              echo "No Teting Label"
-              echo "Default to test local"
-            fi
+          if [[ ${{github.ref}}" == "Dev" ]]; then
+              echo "::set-output name=sdfx_login_url::${{env.SFDX_AUTH_URL_Dev}}"
+          elif [[ ${{github.ref}}" == "QA" ]]; then
+              echo "::set-output name=sdfx_login_url::${{env.SFDX_AUTH_URL_QA}}"
+          elif [[ ${{github.ref}}" == "UAT" ]]; then
+              echo "::set-output name=sdfx_login_url::${{env.SFDX_AUTH_URL_UAT}}"
+          else
+              echo "There is no login url for this branch"
+              exit 1
+          fi
+      - name: Test
+        run: echo ${{steps.login-url.outputs.sdfx_login_url}}
+      # - name: Login
+      #   uses: sfdx-actions/setup-sfdx@v1
+      #   with:
+      #     # sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
+      #     sfdx-auth-url: ${{steps.login-url.outputs.sdfx_login_url}}
+      # - name: Deploy
+      #   run: sfdx force:source:deploy -x manifest/package.xml
+      # - name: Get PR labels
+      #   id: pr-labels
+      #   uses: joerick/pr-labels-action@v1.0.6
+      # - name: Run Tests
+      #   run: |
+      #       if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
+      #         echo "'test none' label found.  No tests being run"
+      #       elif [ -n "$GITHUB_PR_LABEL_TEST_ALL" ]; then
+      #         echo "'test all' label found.  Running all tests"
+      #       elif [ -n "$GITHUB_PR_LABEL_TEST_LOCAL" ]; then
+      #         echo "'test local' label found.  Running local tests"
+      #         sfdx force:apex:test:run --testlevel RunLocalTests
+      #       elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
+      #         echo "'test specified' label found.  Running specified tests"              
+      #       else
+      #         echo "No Teting Label"
+      #         echo "Default to test local"
+      #       fi
