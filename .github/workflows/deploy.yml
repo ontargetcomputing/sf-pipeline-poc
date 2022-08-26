@@ -36,30 +36,48 @@ jobs:
               echo "There is no login url for this branch"
               exit 1
           fi
-      - name: Test
+      - name: Login URL
         run: echo ${{steps.login-url.outputs.sdfx_login_url}}
-      # - name: Login
-      #   uses: sfdx-actions/setup-sfdx@v1
-      #   with:
-      #     # sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
-      #     sfdx-auth-url: ${{steps.login-url.outputs.sdfx_login_url}}
-      # - name: Deploy
-      #   run: sfdx force:source:deploy -x manifest/package.xml
-      # - name: Get PR labels
-      #   id: pr-labels
-      #   uses: joerick/pr-labels-action@v1.0.6
-      # - name: Run Tests
-      #   run: |
-      #       if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
-      #         echo "'test none' label found.  No tests being run"
-      #       elif [ -n "$GITHUB_PR_LABEL_TEST_ALL" ]; then
-      #         echo "'test all' label found.  Running all tests"
-      #       elif [ -n "$GITHUB_PR_LABEL_TEST_LOCAL" ]; then
-      #         echo "'test local' label found.  Running local tests"
-      #         sfdx force:apex:test:run --testlevel RunLocalTests
-      #       elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
-      #         echo "'test specified' label found.  Running specified tests"              
-      #       else
-      #         echo "No Teting Label"
-      #         echo "Default to test local"
-      #       fi
+      - name: Login
+        uses: sfdx-actions/setup-sfdx@v1
+        with:
+          # sfdx-auth-url: ${{ secrets.SFDX_AUTH_URL }}
+          sfdx-auth-url: ${{steps.login-url.outputs.sdfx_login_url}}
+      - name: Get PR labels
+        id: pr-labels
+        uses: joerick/pr-labels-action@v1.0.6
+      - uses: begedin/variable-regex-extractor-action@v0.2.1
+        if: contains(steps.pr-labels.outputs.labels, ' test specified ')
+        id: tests
+        with:
+          pattern: |
+            #BEGIN_TESTS([\s\S]*)#END_TESTS
+      - name: Determine Named Tests
+        if: contains(steps.pr-labels.outputs.labels, ' test specified ')
+        id: tests-cooked
+        run: |
+          echo "${{steps.tests.outputs.value}}"
+          tests_list="${{steps.tests.outputs.value}}"
+          tests_list=`echo $tests_list | tr '\n' ' '`
+          tests_list=`echo $tests_list | tr '\r' ' '`
+          tests_list=`echo $tests_list | sed 's/ *$//g'`
+          echo "::set-output name=tests-cooked::$tests_list"
+      - name: test-output
+        run: echo ${{steps.tests-cooked.outputs.tests-cooked}}
+
+        # - name: Deploy
+        #   run: |
+        #       if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
+        #         echo "'test none' label found.  No tests being run"
+        #       elif [ -n "$GITHUB_PR_LABEL_TEST_ALL" ]; then
+        #         echo "'test all' label found.  Running all tests"
+        #       elif [ -n "$GITHUB_PR_LABEL_TEST_LOCAL" ]; then
+        #         echo "'test local' label found.  Running local tests"
+        #         sfdx force:apex:test:run --testlevel RunLocalTests
+        #       elif [ -n "$GITHUB_PR_LABEL_TEST_SPECIFIED" ]; then
+        #         echo "'test specified' label found.  Running specified tests"
+        #         sfdx force:source:deploy -x "manifest/package.xml" -l RunSpecifiedTests -r ${{}} -w 33 --verbose --loglevel fatal              
+        #       else
+        #         echo "No Teting Label"
+        #         echo "Default to test local"
+        #       fi
