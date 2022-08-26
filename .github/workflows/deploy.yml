@@ -9,12 +9,9 @@ on:
     types: [closed]
 
 env: 
-  SFDX_AUTH_URL_Dev: This_is_Dev
-  SFDX_AUTH_URL_QA: This_is_QA
-  SFDX_AUTH_URL_UAT: This_is_UAT
-  # SFDX_AUTH_URL_Dev: force://PlatformCLI::5Aep861aymUV3BBBVkLk.VwvuwKsPOS8dcBtgsiTFsoDUIMlFVAyyNCyUDD5BlbwJMHnJnz.J5K8qvVr0oU6EkG@nyorkcdotapa--dev.my.salesforce.com
-  # SFDX_AUTH_URL_QA: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
-  # SFDX_AUTH_URL_UAT: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
+  SFDX_AUTH_URL_Dev: force://PlatformCLI::5Aep861aymUV3BBBVkLk.VwvuwKsPOS8dcBtgsiTFsoDUIMlFVAyyNCyUDD5BlbwJMHnJnz.J5K8qvVr0oU6EkG@nyorkcdotapa--dev.my.salesforce.com
+  SFDX_AUTH_URL_QA: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
+  SFDX_AUTH_URL_UAT: force://PlatformCLI::5Aep861YbQ2WNspBqGWFxSr4OuHuNAwU6kZlu3sgXZXtedtQaFhaKMKkFMVwHSHSybrOiYgOVoauSXOcnCCa5bi@nyorkcdotapa--qa.my.salesforce.com
 jobs:
   deploy:
     runs-on: ubuntu-latest
