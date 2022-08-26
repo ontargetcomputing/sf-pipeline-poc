@@ -10,8 +10,8 @@ private class HelloWorldTestClass {
        // Retrieve the new book
        b = [SELECT Price__c FROM Book__c WHERE Id =:b.Id];
        System.debug('Price after trigger fired: ' + b.Price__c);
-
+       // a comment - this is 8/25/2022
        // Test that the trigger correctly updated the price
-       System.assertEquals(95, b.Price__c);
+       System.assertEquals(90, b.Price__c);
     }
 }
