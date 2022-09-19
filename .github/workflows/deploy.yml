@@ -87,7 +87,7 @@ jobs:
         run: |
           echo "FAILED WILL ROLL BACK"
           git status
-          # git reset --hard HEAD^
+          git reset --hard HEAD^
           # git push -f origin UAT1        
           exit 1
       - name: Roll Back Not Happening
