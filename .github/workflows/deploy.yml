@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
-          token: ${{ github.token }}
+          token: ${{ secrets.PAT }}
       # - name: Determine Login Url
       #   id: login-url
       #   run: |
@@ -65,7 +65,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
-            returnvalue=failed
+            returnvalue=succeeded
             # echo DEPLOYING
             # if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
             #   echo "'test none' label found.  No tests being run"
