@@ -19,7 +19,7 @@ jobs:
     steps:
       # - name: Show Branch
       #   run: echo Deploying and testing to ${{ github.ref }}
-      # - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       # - name: Determine Login Url
       #   id: login-url
       #   run: |
