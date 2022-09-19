@@ -83,11 +83,11 @@ jobs:
 
             echo "::set-output name=sfdx_result::$returnvalue"
       - name: Roll Back
-        if: steps.deploy.outputs.sfdx_result == "failed"
+        if: ${steps.deploy.outputs.sfdx_result == "failed"}
         run: |
           echo "FAILED WILL ROLL BACK"
           exit 1
       - name: Roll Back Not Happening
-        if: steps.deploy.outputs.sfdx_result == "succeeded"
+        if: ${steps.deploy.outputs.sfdx_result == "succeeded"}
         run: |
           echo "SUCCEEDED"
