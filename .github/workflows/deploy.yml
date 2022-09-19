@@ -62,7 +62,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
-            returnvalue=succeeded
+            returnvalue=failed
             # echo DEPLOYING
             # if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
             #   echo "'test none' label found.  No tests being run"
