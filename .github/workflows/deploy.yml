@@ -62,7 +62,7 @@ jobs:
       - name: Deploy
         id: deploy
         run: |
-            returnvalue=failed
+            returnvalue=succeeded
             # echo DEPLOYING
             # if [ -n "$GITHUB_PR_LABEL_TEST_NONE" ]; then
             #   echo "'test none' label found.  No tests being run"
@@ -89,5 +89,8 @@ jobs:
           exit 1
       - name: Roll Back Not Happening
         if: steps.deploy.outputs.sfdx_result == 'succeeded'
+        run: |
+          git reset --hard HEAD^
+          git push -f origin UAT1
         run: |
           echo "SUCCEEDED"
