@@ -86,8 +86,9 @@ jobs:
         if: steps.deploy.outputs.sfdx_result == 'failed'
         run: |
           echo "FAILED WILL ROLL BACK"
+          git fetch origin UAT1
           git log
-          git reset --hard HEAD^
+          # git reset --hard HEAD^
           # git push -f origin UAT1        
           exit 1
       - name: Roll Back Not Happening
