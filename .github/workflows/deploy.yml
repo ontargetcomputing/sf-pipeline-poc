@@ -86,7 +86,7 @@ jobs:
         if: steps.deploy.outputs.sfdx_result == 'failed'
         run: |
           echo "FAILED WILL ROLL BACK"
-          git status
+          git log
           git reset --hard HEAD^
           # git push -f origin UAT1        
           exit 1
